@@ -2,6 +2,7 @@ package com.wsx.tmall.test;
 
 import com.wsx.tmall.pojo.Category;
 import com.wsx.tmall.service.CategoryService;
+import com.wsx.tmall.util.Page;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class MybatisTest {
 
     @Test
     public void list() {
-        List<Category> categories = categoryService.list();
+        Page page = new Page(0, 5);
+        List<Category> categories = categoryService.list(page);
         for(Category category : categories) {
             System.out.println(category.getId() + "\t" + category.getName());
         }

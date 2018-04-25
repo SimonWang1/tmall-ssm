@@ -5,6 +5,13 @@
 
 <mapper namespace="com.wsx.tmall.mapper.CategoryMapper">
     <select id="list" resultType="Category">
-        select * from category order by id asc;
+        select * from category order by id asc
+        <if test="start!=null and count!=null">
+            limit #{start}, #{count}
+        </if>
+    </select>
+
+    <select id="total" resultType="Integer">
+        select count( * ) from category
     </select>
 </mapper>
