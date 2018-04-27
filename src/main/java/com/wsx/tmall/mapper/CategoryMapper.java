@@ -1,23 +1,21 @@
 package com.wsx.tmall.mapper;
 
 import com.wsx.tmall.pojo.Category;
-import com.wsx.tmall.util.Page;
-
+import com.wsx.tmall.pojo.CategoryExample;
 import java.util.List;
 
-/**
- * Created by frank on 2018/4/24.
- */
 public interface CategoryMapper {
-    List<Category> list(Page page);
+    int deleteByPrimaryKey(Integer id);
 
-    int total();
+    int insert(Category record);
 
-    void add(Category category);
+    int insertSelective(Category record);
 
-    void delete(int id);
+    List<Category> selectByExample(CategoryExample example);
 
-    Category get(int id);
+    Category selectByPrimaryKey(Integer id);
 
-    void update(Category category);
+    int updateByPrimaryKeySelective(Category record);
+
+    int updateByPrimaryKey(Category record);
 }

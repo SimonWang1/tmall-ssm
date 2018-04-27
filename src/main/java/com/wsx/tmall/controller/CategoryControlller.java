@@ -1,5 +1,7 @@
 package com.wsx.tmall.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wsx.tmall.pojo.Category;
 import com.wsx.tmall.service.CategoryService;
 import com.wsx.tmall.util.ImageUtil;
@@ -30,8 +32,9 @@ public class CategoryControlller {
 
     @RequestMapping("admin_category_list")
     public String list(Model model, Page page) {
-        List<Category> categories = categoryService.list(page);
-        int total = categoryService.total();
+        PageHelper.offsetPage(page.getStart(), page.getCount());
+        List<Category> categories = categoryService.list();
+        int total = (int) new PageInfo<>(categories).getTotal();
         page.setTotal(total);
         model.addAttribute("categories", categories);
         model.addAttribute("page", page);

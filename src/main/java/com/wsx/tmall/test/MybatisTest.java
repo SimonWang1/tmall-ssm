@@ -22,22 +22,21 @@ public class MybatisTest {
 
     @Test
     public void list() {
-        Page page = new Page(0, 100);
-        List<Category> categories = categoryService.list(page);
+        List<Category> categories = categoryService.list();
         for(Category category : categories) {
             System.out.println(category.getId() + "\t" + category.getName());
         }
     }
 
-   /* @Test
+    @Test
     public void get() {
-        Category category = categoryService.get(1);
+        Category category = categoryService.get(11);
         System.out.println(category.getName());
     }
 
-    @Test
-    public void count() {
-        int count = categoryService.count();
+    /*@Test
+    public void total() {
+        int count = categoryService.total();
         System.out.println(count);
     }*/
 
@@ -48,7 +47,7 @@ public class MybatisTest {
         categoryService.add(category);
     }
 
-    /*@Test
+    @Test
     public void update() {
         Category category = new Category();
         category.setId(64);
@@ -60,5 +59,5 @@ public class MybatisTest {
     public void delete() {
         int id = 65;
         categoryService.delete(id);
-    }*/
+    }
 }
