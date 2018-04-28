@@ -12,9 +12,9 @@ public interface PropertyService {
 
     Property get(int id);
 
-    void add(Property property);
-
     void update(Property property);
+
+    void add(Property property);
 
     void delete(int id);
 }

@@ -28,7 +28,7 @@ public class PropertyController {
 
     @RequestMapping("admin_property_list")
     public String list(int cid, Model model, Page page){
-        // 面包屑导航显示category属性
+        // category用于面包屑导航
         Category category = categoryService.get(cid);
         PageHelper.offsetPage(page.getStart(), page.getCount());
         List<Property> properties = propertyService.list(cid);
