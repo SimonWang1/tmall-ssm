@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by frank on 2018/4/28.
  */
+
 @Service
 public class PropertyServiceImpl implements PropertyService {
 

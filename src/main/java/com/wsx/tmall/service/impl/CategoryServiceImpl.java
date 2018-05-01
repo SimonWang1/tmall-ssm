@@ -27,16 +27,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void add(Category category) {
-        categoryMapper.insert(category);
-    }
-
-    @Override
-    public void delete(int id) {
-        categoryMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
     public Category get(int id) {
         return categoryMapper.selectByPrimaryKey(id);
     }
@@ -44,5 +34,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void update(Category category) {
         categoryMapper.updateByPrimaryKeySelective(category);
+    }
+
+    @Override
+    public void add(Category category) {
+        categoryMapper.insert(category);
+    }
+
+    @Override
+    public void delete(int id) {
+        categoryMapper.deleteByPrimaryKey(id);
     }
 }

@@ -26,7 +26,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("")
-public class CategoryControlller {
+public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
@@ -51,11 +51,11 @@ public class CategoryControlller {
         // 创建路径
         if(!file.getParentFile().exists())
             file.getParentFile().mkdir();
-        // 保存操作
+        // 保存图片
         uploadedImageFile.getImage().transferTo(file);
-        // 确保文件格式为jpg
+        // 将文件转换为jpg格式
         BufferedImage image = ImageUtil.change2jpg(file);
-        // 图片上传
+        // 上传
         ImageIO.write(image, "jpg", file);
         return "redirect:/admin_category_list";
     }
