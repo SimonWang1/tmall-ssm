@@ -103,7 +103,7 @@
                                     <tr class="submitTR">
                                         <td align="center">
                                             <input type="hidden" name="type" value="type_detail" />
-                                            <input type="hidden" name="pid" value="${p.id}" />
+                                            <input type="hidden" name="pid" value="${product.id}" />
                                             <button type="submit" class="btn btn-success">提 交</button>
                                         </td>
                                     </tr>

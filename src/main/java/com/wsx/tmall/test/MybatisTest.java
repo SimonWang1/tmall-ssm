@@ -1,8 +1,11 @@
 package com.wsx.tmall.test;
 
 import com.wsx.tmall.pojo.Category;
+import com.wsx.tmall.pojo.ProductImage;
+import com.wsx.tmall.pojo.ProductImageExample;
 import com.wsx.tmall.pojo.Property;
 import com.wsx.tmall.service.CategoryService;
+import com.wsx.tmall.service.ProductImageService;
 import com.wsx.tmall.service.PropertyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,12 +21,24 @@ public class MybatisTest {
     private CategoryService categoryService;
     @Autowired
     private PropertyService propertyService;
+    @Autowired
+    private ProductImageService productImageService;
 
     @Test
     public void list() {
         List<Category> categories = categoryService.list();
         for(Category category : categories) {
             System.out.println(category.getId() + "\t" + category.getName());
+        }
+    }
+
+    @Test
+    public void listImage() {
+        String type = "type_single";
+        int pid = 2;
+        List<ProductImage> productImages = productImageService.list(pid, type);
+        for(ProductImage productImage : productImages){
+            System.out.println(productImage.getId() + "\t" + productImage.getPid() + productImage.getType());
         }
     }
 

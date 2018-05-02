@@ -21,7 +21,7 @@ public class ProductImageServiceImpl implements ProductImageService{
     @Override
     public List<ProductImage> list(int pid, String type) {
         ProductImageExample example = new ProductImageExample();
-        example.createCriteria().andIdEqualTo(pid).andTypeEqualTo(type);
+        example.createCriteria().andPidEqualTo(pid).andTypeEqualTo(type);
         example.setOrderByClause("id asc");
         return productImageMapper.selectByExample(example);
     }
