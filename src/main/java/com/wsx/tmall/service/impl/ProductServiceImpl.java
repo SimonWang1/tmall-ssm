@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
         List result = productMapper.selectByExample(example);
         // 每条数据获取对应category
         setCategory(result);
-        // 对应图片
+        // 每条数据对应图片
         setFirstProductImage(result);
         return result;
     }
@@ -47,21 +47,6 @@ public class ProductServiceImpl implements ProductService {
         // 获取图片
         setFirstProductImage(product);
         return product;
-    }
-
-    // 遍历products对应的category
-    public void setCategory(List<Product> products){
-        for(Product product : products){
-            // 调用单条
-            setCategory(product);
-        }
-    }
-
-    // 单条product对应的category
-    public void setCategory(Product product){
-        int cid = product.getCid();
-        Category category = categoryService.get(cid);
-        product.setCategory(category);
     }
 
     @Override
@@ -79,6 +64,21 @@ public class ProductServiceImpl implements ProductService {
         productMapper.deleteByPrimaryKey(id);
     }
 
+    // 单条product对应的category
+    public void setCategory(Product product){
+        int cid = product.getCid();
+        Category category = categoryService.get(cid);
+        product.setCategory(category);
+    }
+
+    // 遍历products对应的category
+    public void setCategory(List<Product> products){
+        for(Product product : products){
+            // 调用单条
+            setCategory(product);
+        }
+    }
+
     @Override
     public void setFirstProductImage(Product product) {
         List<ProductImage> pis = productImageService.list(product.getId(), productImageService.type_single);
@@ -88,6 +88,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    // 取查询的第一条图片当做产品略缩图
     public void setFirstProductImage(List<Product> products){
         for(Product product : products){
             setFirstProductImage(product);
