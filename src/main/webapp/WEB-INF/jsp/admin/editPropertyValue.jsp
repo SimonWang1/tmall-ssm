@@ -8,24 +8,26 @@
 <title>编辑产品属性值</title>
 
 <script>
-    $(function () {
-        $("input.pvValue").keyup(function () {
-            var value = $(this).val();
-            var page = "admin_propertyValue_update";
-            var pvid = $(this).attr("pvid");
-            var parentSpan = $(this).parent("span");
-            parentSpan.css("border", "1px solid yellow");
-            $.post(
-                    page,
-                    {"value": value, "id": pvid},
-                    function (result) {
-                        if ("success" == result)
-                            parentSpan.css("border", "1px solid green");
-                        else
-                            parentSpan.css("border", "1px solid red");
-                    }
-            );
-        });
+    $(function(){
+       $("input.pvValue").keyup(function(){
+           var pvid = $(this).attr("pvid");
+           var value = $(this).val();
+           var page = "admin_propertyValue_update";
+           var parentSpan = $(this).parent("span");
+           parentSpan.css("border", "1px solid yellow");
+           // AJAX以post方式向page路径提交JSON形式的id和value参数用于更新数据
+           $.post(
+               page,
+               {"id":pvid, "value":value},
+               // 响应是否成功变换边框颜色
+               function(result){
+                   if(result == "success")
+                       parentSpan.css("border", "1px solid green");
+                   else
+                       parentSpan.css("border", "1px solid red");
+               }
+           );
+       });
     });
 </script>
 

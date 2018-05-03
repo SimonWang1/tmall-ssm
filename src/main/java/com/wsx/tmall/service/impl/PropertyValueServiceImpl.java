@@ -26,12 +26,13 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
     @Override
     public void init(Product product) {
-        // 根据产品获取分类，通过分类查询属性
+        // 通过产品获取分类CID用于查询属性
         List<Property> properties = propertyService.list(product.getCid());
+        // 遍历属性
         for(Property property : properties){
-            // 查询属性值
+            // 通过产品和属性ID查询对应属性值
             PropertyValue propertyValue = get(product.getId(), property.getId());
-            // 若为空，实例化属性值并插入到数据库
+            // 若为空进行初始化，实例化属性值并插入对应产品和属性ID到数据库，属性值为null
             if(propertyValue == null){
                 propertyValue = new PropertyValue();
                 propertyValue.setPid(product.getId());
@@ -42,19 +43,23 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     }
 
     @Override
-    // 获取属性值
     public List<PropertyValue> list(int pid) {
+        // 通过产品PID获取属性值
         PropertyValueExample example = new PropertyValueExample();
         example.createCriteria().andPidEqualTo(pid);
         List<PropertyValue> pvs = propertyValueMapper.selectByExample(example);
+        // 遍历属性值
         for(PropertyValue propertyValue : pvs){
+            // 通过属性值中产品PTID获取属性用于动态显示属性值对应属性名称
             Property property = propertyService.get(propertyValue.getPtid());
+            // 赋值操作
             propertyValue.setProperty(property);
         }
         return pvs;
     }
 
     @Override
+    // 通过PID和PIID获取单条数据
     public PropertyValue get(int pid, int ptid) {
         PropertyValueExample example = new PropertyValueExample();
         example.createCriteria().andPidEqualTo(pid).andPtidEqualTo(ptid);

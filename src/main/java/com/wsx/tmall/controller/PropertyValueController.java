@@ -27,8 +27,11 @@ public class PropertyValueController {
 
     @RequestMapping("admin_propertyValue_edit")
     public String edit(int pid, Model model){
+        // 产品对象引用用于面包屑导航
         Product product = productService.get(pid);
+        // 初始化
         propertyValueService.init(product);
+        // 查询属性值，包含属性值对应属性名称
         List<PropertyValue> pvs = propertyValueService.list(product.getId());
         model.addAttribute("product", product);
         model.addAttribute("pvs", pvs);
@@ -37,6 +40,7 @@ public class PropertyValueController {
 
     @RequestMapping("admin_propertyValue_update")
     @ResponseBody
+    // AJAX异步响应更新
     public String update(PropertyValue propertyValue){
         propertyValueService.update(propertyValue);
         return "success";
