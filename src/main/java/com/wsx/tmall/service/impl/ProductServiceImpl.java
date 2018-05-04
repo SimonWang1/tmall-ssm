@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
         example.createCriteria().andCidEqualTo(cid);
         example.setOrderByClause("id asc");
         List result = productMapper.selectByExample(example);
-        // 每条数据获取对应category
+        // 每条数据获取对应category用于前端显示
         setCategory(result);
         // 每条数据对应图片
         setFirstProductImage(result);
@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product get(int id) {
         Product product = productMapper.selectByPrimaryKey(id);
-        // 获取对应category
+        // 获取对应category用于前端显示
         setCategory(product);
         // 获取图片
         setFirstProductImage(product);
@@ -64,19 +64,17 @@ public class ProductServiceImpl implements ProductService {
         productMapper.deleteByPrimaryKey(id);
     }
 
-    // 单条product对应的category
-    public void setCategory(Product product){
-        int cid = product.getCid();
-        Category category = categoryService.get(cid);
-        product.setCategory(category);
-    }
-
-    // 遍历products对应的category
     public void setCategory(List<Product> products){
         for(Product product : products){
-            // 调用单条
+            // 遍历调用单条
             setCategory(product);
         }
+    }
+
+    // 设置product对应的category属性
+    public void setCategory(Product product){
+        Category category = categoryService.get(product.getCid());
+        product.setCategory(category);
     }
 
     @Override

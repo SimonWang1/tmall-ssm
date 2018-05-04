@@ -11,6 +11,17 @@ public class OrderItem {
 
     private Integer number;
 
+    // 用于显示订单中的图片
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public Integer getId() {
         return id;
     }

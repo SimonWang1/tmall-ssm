@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Created by frank on 2018/4/27.
  */
-public class MybatisGenerator {
 
+public class MybatisGenerator {
     public static void main(String[] args) throws Exception {
         String today = "2018-04-27";
 
@@ -32,7 +32,7 @@ public class MybatisGenerator {
 
         if(false)
             return;
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
         InputStream is= MybatisGenerator.class.getClassLoader().getResource("generatorConfig.xml").openStream();
         ConfigurationParser cp = new ConfigurationParser(warnings);
@@ -41,9 +41,6 @@ public class MybatisGenerator {
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
-
         System.out.println("生成代码成功，只能执行一次，以后执行会覆盖掉mapper,pojo,xml 等文件上做的修改");
-
     }
-
 }
