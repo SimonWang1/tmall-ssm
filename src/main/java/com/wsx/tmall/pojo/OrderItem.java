@@ -11,7 +11,7 @@ public class OrderItem {
 
     private Integer number;
 
-    // 用于显示订单中的图片
+    // 用于显示订单中的的产品信息
     private Product product;
 
     public Product getProduct() {

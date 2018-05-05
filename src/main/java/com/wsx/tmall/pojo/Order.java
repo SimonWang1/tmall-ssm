@@ -44,7 +44,7 @@ public class Order {
     // 订单总数量
     private int totalNumber;
 
-    // 订单状态
+    // 订单状态中文显示
     public String getStatusDesc(){
         String desc;
         switch(status){

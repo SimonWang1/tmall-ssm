@@ -24,10 +24,11 @@
         </li>
 
         <c:forEach begin="0" end="${page.totalPage-1}" varStatus="status">
+            <%--遍历中间页状态，选中时添加不可选中和字体效果--%>
             <li <c:if test="${status.index*page.count==page.start}">class="disabled"</c:if>>
                 <a href="?start=${status.index*page.count}${page.param}"
-                   <c:if test="${status.index*page.count==page.start}">class="current"</c:if>
-                >${status.count}</a>
+                <c:if test="${status.index*page.count==page.start}">class="current"</c:if>>
+                   ${status.count}</a>
             </li>
         </c:forEach>
 

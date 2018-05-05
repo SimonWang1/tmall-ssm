@@ -81,7 +81,6 @@
                         </c:forEach>
                         </tbody>
                     </table>
-
                 </div>
             </td>
             <td class="addPictureTableTD">
@@ -138,7 +137,6 @@
             </td>
         </tr>
     </table>
-
 </div>
 
 <%@include file="../include/admin/adminFooter.jsp"%>

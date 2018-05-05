@@ -19,20 +19,19 @@ import java.util.List;
 @Service
 public class PropertyValueServiceImpl implements PropertyValueService {
     @Autowired
-    private PropertyValueMapper propertyValueMapper;
-
-    @Autowired
     private PropertyService propertyService;
+    @Autowired
+    private PropertyValueMapper propertyValueMapper;
 
     @Override
     public void init(Product product) {
-        // 通过产品获取分类CID用于查询属性
+        // 通过产品获取分类CID用于动态生成属性值名称
         List<Property> properties = propertyService.list(product.getCid());
         // 遍历属性
         for(Property property : properties){
             // 通过产品和属性ID查询对应属性值
             PropertyValue propertyValue = get(product.getId(), property.getId());
-            // 若为空进行初始化，实例化属性值并插入对应产品和属性ID到数据库，属性值为null
+            // 若为空进行初始化，实例化属性值并插入对应产品和属性ID，属性值为null
             if(propertyValue == null){
                 propertyValue = new PropertyValue();
                 propertyValue.setPid(product.getId());

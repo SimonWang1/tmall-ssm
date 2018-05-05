@@ -31,14 +31,44 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping("admin_category_list")
-    public String list(Model model, Page page) {
+    public String list(Page page, Model model) {
+        // 设置分页参数
         PageHelper.offsetPage(page.getStart(), page.getCount());
         List<Category> categories = categoryService.list();
+        // 获取总数
         int total = (int) new PageInfo<>(categories).getTotal();
         page.setTotal(total);
         model.addAttribute("categories", categories);
         model.addAttribute("page", page);
         return "admin/listCategory";
+    }
+
+    @RequestMapping("admin_category_edit")
+    public String get(int id, Model model) throws IOException{
+        Category category = categoryService.get(id);
+        model.addAttribute("category", category);
+        return "admin/editCategory";
+    }
+
+    @RequestMapping("admin_category_update")
+    public String update(Category category, HttpSession session, UploadedImageFile uploadedImageFile) throws IOException{
+        categoryService.update(category);
+        // 获取当前页面上传图片
+        MultipartFile image = uploadedImageFile.getImage();
+        // 判断是否需要更新图片
+        if(image != null && !image.isEmpty()) {
+            // 获取路径
+            File imageFolder = new File(session.getServletContext().getRealPath("img/category"));
+            // 通过ID创建文件名
+            File file = new File(imageFolder, category.getId() + ".jpg");
+            // 保存图片
+            image.transferTo(file);
+            // 将文件转换为jpg格式
+            BufferedImage img = ImageUtil.change2jpg(file);
+            // 上传
+            ImageIO.write(img, "jpg", file);
+        }
+        return "redirect:admin_category_list";
     }
 
     @RequestMapping("admin_category_add")
@@ -57,7 +87,7 @@ public class CategoryController {
         BufferedImage image = ImageUtil.change2jpg(file);
         // 上传
         ImageIO.write(image, "jpg", file);
-        return "redirect:/admin_category_list";
+        return "redirect:admin_category_list";
     }
 
     @RequestMapping("admin_category_delete")
@@ -67,34 +97,6 @@ public class CategoryController {
         File imageFolder = new File(session.getServletContext().getRealPath("image/category"));
         File file = new File(imageFolder, id + ".jpg");
         file.delete();
-        return "redirect:/admin_category_list";
-    }
-
-    @RequestMapping("admin_category_edit")
-    public String get(int id, Model model) throws IOException{
-        Category category = categoryService.get(id);
-        model.addAttribute("category", category);
-        return "admin/editCategory";
-    }
-
-    @RequestMapping("admin_category_update")
-    public String update(Category category, HttpSession session, UploadedImageFile uploadedImageFile) throws IOException{
-        categoryService.update(category);
-        // 获取更新图片
-        MultipartFile image = uploadedImageFile.getImage();
-        // 更新图片判断
-        if(image != null && !image.isEmpty()) {
-            // 获取路径
-            File imageFolder = new File(session.getServletContext().getRealPath("img/category"));
-            // 定位文件
-            File file = new File(imageFolder, category.getId() + ".jpg");
-            // 更新操作
-            image.transferTo(file);
-            // 确保文件格式为jpg
-            BufferedImage img = ImageUtil.change2jpg(file);
-            // 图片更新
-            ImageIO.write(img, "jpg", file);
-        }
-        return "redirect:/admin_category_list";
+        return "redirect:admin_category_list";
     }
 }
