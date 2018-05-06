@@ -32,7 +32,7 @@ public class Order {
 
     private String status;
 
-    // 订单对应订单项内容
+    // 订单一对多对应订单项
     private List<OrderItem> orderItems;
 
     // 订单对应的用户

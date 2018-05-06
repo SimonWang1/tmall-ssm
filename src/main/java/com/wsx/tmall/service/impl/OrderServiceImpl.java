@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService{
         OrderExample example = new OrderExample();
         example.setOrderByClause("id asc");
         List<Order> results = orderMapper.selectByExample(example);
-        // 获取order对应user用于前端显示
+        // 调用order对应user用于前端显示
         setUser(results);
         return results;
     }

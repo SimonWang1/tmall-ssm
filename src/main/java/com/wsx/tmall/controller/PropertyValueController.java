@@ -21,7 +21,6 @@ import java.util.List;
 public class PropertyValueController {
     @Autowired
     private ProductService productService;
-
     @Autowired
     private PropertyValueService propertyValueService;
 

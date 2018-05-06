@@ -33,7 +33,7 @@ public class OrderController {
         List<Order> orders = orderService.list();
         int total = (int) new PageInfo<>(orders).getTotal();
         page.setTotal(total);
-        // 通过fill方法传递orderItem参数，用于输出product属性
+        // 通过fill(orders)依次设置orderItem参数
         orderItemService.fill(orders);
         model.addAttribute("page", page);
         model.addAttribute("orders", orders);

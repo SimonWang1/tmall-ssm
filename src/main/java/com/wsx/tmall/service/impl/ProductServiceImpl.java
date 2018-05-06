@@ -71,25 +71,26 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    // 设置product对应的category属性
+    // 设置product对应category属性
     public void setCategory(Product product){
         Category category = categoryService.get(product.getCid());
         product.setCategory(category);
+    }
+
+    public void setFirstProductImage(List<Product> products){
+        for(Product product : products){
+            // 遍历调用单条
+            setFirstProductImage(product);
+        }
     }
 
     @Override
     public void setFirstProductImage(Product product) {
         List<ProductImage> pis = productImageService.list(product.getId(), productImageService.type_single);
         if(!pis.isEmpty()){
+            // 取查询的第一条图片当做产品略缩图
             ProductImage productImage = pis.get(0);
             product.setFirstProductImage(productImage);
-        }
-    }
-
-    // 取查询的第一条图片当做产品略缩图
-    public void setFirstProductImage(List<Product> products){
-        for(Product product : products){
-            setFirstProductImage(product);
         }
     }
 }

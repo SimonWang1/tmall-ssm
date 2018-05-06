@@ -33,6 +33,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem get(int id) {
         OrderItem result = orderItemMapper.selectByPrimaryKey(id);
+        // 调用orderItem对应product用于前端显示
         setProduct(result);
         return result;
     }
@@ -52,6 +53,36 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public void fill(List<Order> orders) {
+        // 遍历调用单条
+        for(Order order : orders){
+            fill(order);
+        }
+    }
+
+    @Override
+    public void fill(Order order) {
+        // 根据订单oid查询orderItems
+        OrderItemExample example = new OrderItemExample();
+        example.createCriteria().andOidEqualTo(order.getId());
+        example.setOrderByClause("id asc");
+        List<OrderItem> orderItems = orderItemMapper.selectByExample(example);
+        // 依次设置product属性
+        setProduct(orderItems);
+        float total = 0;
+        int totalNumber = 0;
+        // 遍历orderItem，计算total和totalNumber
+        for(OrderItem orderItem : orderItems){
+            total += orderItem.getNumber() * orderItem.getProduct().getPromotePrice();
+            totalNumber += orderItem.getNumber();
+        }
+        // 将total、totalNumber、orderItem属性设置在order上
+        order.setTotal(total);
+        order.setTotalNumber(totalNumber);
+        order.setOrderItems(orderItems);
+    }
+
     public void setProduct(List<OrderItem> orderItems){
         // 遍历调用单条
         for(OrderItem orderItem : orderItems){
@@ -63,34 +94,5 @@ public class OrderItemServiceImpl implements OrderItemService {
     private void setProduct(OrderItem orderItem){
         Product product = productService.get(orderItem.getPid());
         orderItem.setProduct(product);
-    }
-
-    @Override
-    public void fill(List<Order> orders) {
-        for(Order order : orders){
-            fill(order);
-        }
-    }
-
-    @Override
-    public void fill(Order order) {
-        OrderItemExample example = new OrderItemExample();
-        example.createCriteria().andOidEqualTo(order.getId());
-        example.setOrderByClause("id asc");
-        // 根据订单ID查询订单项
-        List<OrderItem> orderItems = orderItemMapper.selectByExample(example);
-        // 设置product属性用于前端显示
-        setProduct(orderItems);
-        float total = 0;
-        int totalNumber = 0;
-        // 遍历订单项，计算出总额和总数
-        for(OrderItem orderItem : orderItems){
-            total += orderItem.getNumber() * orderItem.getProduct().getPromotePrice();
-            totalNumber += orderItem.getNumber();
-        }
-        // 将订单项属性设置在订单上
-        order.setTotal(total);
-        order.setTotalNumber(totalNumber);
-        order.setOrderItems(orderItems);
     }
 }

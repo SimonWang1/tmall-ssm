@@ -18,13 +18,14 @@ import java.util.List;
 /**
  * Created by frank on 2018/4/28.
  */
+
 @Controller
 @RequestMapping("")
 public class ProductController {
     @Autowired
-    private ProductService productService;
-    @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
 
     @RequestMapping("admin_product_list")
     public String list(int cid, Model model, Page page){

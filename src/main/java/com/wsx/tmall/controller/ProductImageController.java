@@ -27,7 +27,6 @@ import java.util.List;
 public class ProductImageController {
     @Autowired
     private ProductService productService;
-
     @Autowired
     private ProductImageService productImageService;
 

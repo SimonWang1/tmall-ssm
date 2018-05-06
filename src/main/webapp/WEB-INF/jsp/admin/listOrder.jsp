@@ -62,7 +62,6 @@
                 </tr>
                 <tr class="orderPageOrderItemTR"  oid=${o.id}>
                     <td colspan="10" align="center">
-
                         <div  class="orderPageOrderItem">
                             <table width="800px" align="center" class="orderPageOrderItemTable">
                                 <c:forEach items="${o.orderItems}" var="oi">

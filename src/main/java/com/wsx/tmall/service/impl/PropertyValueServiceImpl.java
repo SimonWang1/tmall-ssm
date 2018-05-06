@@ -25,13 +25,13 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
     @Override
     public void init(Product product) {
-        // 通过产品获取分类CID用于动态生成属性值名称
+        // 通过product获取cid查询property用于动态生成propertyValue名称
         List<Property> properties = propertyService.list(product.getCid());
-        // 遍历属性
+        // 遍历property
         for(Property property : properties){
-            // 通过产品和属性ID查询对应属性值
+            // 通过product和property id查询对应属性值
             PropertyValue propertyValue = get(product.getId(), property.getId());
-            // 若为空进行初始化，实例化属性值并插入对应产品和属性ID，属性值为null
+            // 若为空进行初始化，依次实例化propertyValue并插入对应product和property id，propertyValue为null
             if(propertyValue == null){
                 propertyValue = new PropertyValue();
                 propertyValue.setPid(product.getId());
@@ -43,13 +43,13 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
     @Override
     public List<PropertyValue> list(int pid) {
-        // 通过产品PID获取属性值
+        // 通过产品pid获取propertyValue
         PropertyValueExample example = new PropertyValueExample();
         example.createCriteria().andPidEqualTo(pid);
         List<PropertyValue> pvs = propertyValueMapper.selectByExample(example);
-        // 遍历属性值
+        // 遍历propertyValue
         for(PropertyValue propertyValue : pvs){
-            // 通过属性值中产品PTID获取属性用于动态显示属性值对应属性名称
+            // 通过属性ptid依次获取property用于前端动态显示propertyValue对应property名称
             Property property = propertyService.get(propertyValue.getPtid());
             // 赋值操作
             propertyValue.setProperty(property);
@@ -58,7 +58,7 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     }
 
     @Override
-    // 通过PID和PIID获取单条数据
+    // 通过产品pid和属性ptid获取单条数据用于编辑
     public PropertyValue get(int pid, int ptid) {
         PropertyValueExample example = new PropertyValueExample();
         example.createCriteria().andPidEqualTo(pid).andPtidEqualTo(ptid);
