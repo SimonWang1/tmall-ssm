@@ -1,5 +1,6 @@
 package com.wsx.tmall.service;
 
+import com.wsx.tmall.pojo.Category;
 import com.wsx.tmall.pojo.Product;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface ProductService {
     void delete(int id);
 
     void setFirstProductImage(Product product);
+
+    void fill(Category category);
+
+    void fill(List<Category> categories);
+
+    void fillByRow(List<Category> categories);
 }

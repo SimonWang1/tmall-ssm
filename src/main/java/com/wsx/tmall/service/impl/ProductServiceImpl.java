@@ -11,6 +11,7 @@ import com.wsx.tmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,6 +92,39 @@ public class ProductServiceImpl implements ProductService {
             // 取查询的第一条图片当做产品略缩图
             ProductImage productImage = pis.get(0);
             product.setFirstProductImage(productImage);
+        }
+    }
+
+    @Override
+    // 为categories填充product属性
+    public void fill(List<Category> categories) {
+        // 遍历调用单条
+        for(Category category : categories){
+            fill(category);
+        }
+    }
+
+    @Override
+    // 为category填充product属性
+    public void fill(Category category) {
+        List<Product> products = list(category.getId());
+        category.setProducts(products);
+    }
+
+    @Override
+    // 为categories填充8个为一行的推荐product集合
+    public void fillByRow(List<Category> categories) {
+        int productNumberEachRow = 8;
+        for(Category category : categories){
+            List<Product> products = category.getProducts();
+            List<List<Product>> productsByRow = new ArrayList<>();
+            for(int i = 0; i < products.size(); i += productNumberEachRow){
+                int size = i + productNumberEachRow;
+                size = size > products.size() ? products.size() : size;
+                List<Product> productOfEachRow = products.subList(i, size);
+                productsByRow.add(productOfEachRow);
+            }
+            category.setProductsByRow(productsByRow);
         }
     }
 }
